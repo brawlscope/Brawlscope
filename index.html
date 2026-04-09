@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BRAWLSCOPS — Smart Upgrade Advisor by FLAZEOX</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<!-- Preload Brawlify resource icons -->
-<link rel="preload" href="https://cdn.brawlify.com/general/Coins.png" as="image">
-<link rel="preload" href="https://cdn.brawlify.com/general/PowerPoints.png" as="image">
-<link rel="preload" href="https://cdn.brawlify.com/general/StarPower.png" as="image">
-<link rel="preload" href="https://cdn.brawlify.com/general/Gadget.png" as="image">
 <style>
 /* ══════════════════════════════════════
    ROOT VARIABLES — thème lumineux/contrasté
@@ -1024,6 +1019,21 @@ header {
 ══════════════════════════════════════ */
 .icon-coin { font-size: 13px; }
 .icon-pp { font-size: 13px; }
+.detail-label {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  font-family: 'Orbitron', monospace;
+  padding: 1px 4px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  margin-right: 2px;
+}
+.pwr-label  { background: rgba(0,212,255,0.2);  color: #00d4ff; }
+.sp-label   { background: rgba(247,201,72,0.2); color: #f7c948; }
+.gad-label  { background: rgba(255,107,53,0.2); color: #ff6b35; }
+.coin-label { background: rgba(247,201,72,0.15);color: #f7c948; }
+.pp-label   { background: rgba(0,212,255,0.15); color: #00d4ff; }
 
 /* ══════════════════════════════════════
    RESOURCE SUMMARY DISPLAY
@@ -1467,19 +1477,19 @@ footer {
         <div class="tuto-card-title">💰 RESSOURCES</div>
         <div class="tuto-legend">
           <div class="tuto-legend-item">
-            <img class="tuto-icon" src="https://cdn.brawlify.com/general/Coins.png" onerror="this.outerHTML='🪙'" alt="coins" loading="lazy">
+            <img class="tuto-icon" crossorigin="anonymous" src="https://cdn.brawlify.com/general/Coins.png" onerror="this.outerHTML='🪙'" alt="coins" loading="lazy">
             <span><strong style="color:var(--accent)">Pièces</strong> — pour upgrader les niveaux</span>
           </div>
           <div class="tuto-legend-item">
-            <img class="tuto-icon" src="https://cdn.brawlify.com/general/PowerPoints.png" onerror="this.outerHTML='🔵'" alt="pp" loading="lazy">
+            <img class="tuto-icon" crossorigin="anonymous" src="https://cdn.brawlify.com/general/PowerPoints.png" onerror="this.outerHTML='🔵'" alt="pp" loading="lazy">
             <span><strong style="color:var(--accent3)">Power Points</strong> — collectés en jeu</span>
           </div>
           <div class="tuto-legend-item">
-            <img class="tuto-icon" src="https://cdn.brawlify.com/general/StarPower.png" onerror="this.outerHTML='⭐'" alt="sp" loading="lazy">
+            <img class="tuto-icon" crossorigin="anonymous" src="https://cdn.brawlify.com/general/StarPower.png" onerror="this.outerHTML='⭐'" alt="sp" loading="lazy">
             <span><strong style="color:var(--accent)">Star Power</strong> — débloqué niv. 9+</span>
           </div>
           <div class="tuto-legend-item">
-            <img class="tuto-icon" src="https://cdn.brawlify.com/general/Gadget.png" onerror="this.outerHTML='🔧'" alt="gad" loading="lazy">
+            <img class="tuto-icon" crossorigin="anonymous" src="https://cdn.brawlify.com/general/Gadget.png" onerror="this.outerHTML='🔧'" alt="gad" loading="lazy">
             <span><strong style="color:var(--accent2)">Gadget</strong> — objet actif en combat</span>
           </div>
         </div>
@@ -1548,19 +1558,19 @@ footer {
       <div style="font-size:10px;letter-spacing:2px;color:var(--text-muted);font-family:'Orbitron',monospace;margin-bottom:8px;">TON INVENTAIRE</div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
         <div style="display:flex;align-items:center;gap:6px;">
-          <img src="https://cdn.brawlify.com/general/Coins.png" onerror="this.outerHTML='🪙'" style="width:18px;height:18px;object-fit:contain">
+          <img crossorigin="anonymous" src="https://cdn.brawlify.com/general/Coins.png" onerror="this.outerHTML='🪙'" style="width:18px;height:18px;object-fit:contain">
           <span id="summaryCoins" style="font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--accent)">0</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
-          <img src="https://cdn.brawlify.com/general/PowerPoints.png" onerror="this.outerHTML='🔵'" style="width:18px;height:18px;object-fit:contain">
+          <img crossorigin="anonymous" src="https://cdn.brawlify.com/general/PowerPoints.png" onerror="this.outerHTML='🔵'" style="width:18px;height:18px;object-fit:contain">
           <span id="summaryPP" style="font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--accent3)">0</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
-          <img src="https://cdn.brawlify.com/general/Gem.png" onerror="this.outerHTML='💎'" style="width:18px;height:18px;object-fit:contain">
+          <img crossorigin="anonymous" src="https://cdn.brawlify.com/general/Gem.png" onerror="this.outerHTML='💎'" style="width:18px;height:18px;object-fit:contain">
           <span id="summaryGems" style="font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:#a78bfa">0</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
-          <img src="https://cdn.brawlify.com/general/Credits.png" onerror="this.outerHTML='🎟️'" style="width:18px;height:18px;object-fit:contain">
+          <img crossorigin="anonymous" src="https://cdn.brawlify.com/general/Credits.png" onerror="this.outerHTML='🎟️'" style="width:18px;height:18px;object-fit:contain">
           <span id="summaryCredits" style="font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:#ff7043">0</span>
         </div>
       </div>
@@ -1930,43 +1940,43 @@ const HC_BRAWLERS = new Set(['SHELLY','COLT','BULL','BROCK','EL PRIMO','BARLEY',
 
 function computePriorityScore(b, allBrawlers) {
   const tier = getBrawlerTier(b.name);
-  // Base méta : S=5, A=4, B=3, C=2, D=1 (sur 5)
-  const tierBase = {S:5, A:4, B:3, C:2, D:1}[tier] || 2;
+  // Méta base : S=6, A=5, B=3.5, C=2, D=1
+  const tierBase = {S:6, A:5, B:3.5, C:2, D:1}[tier] || 2;
 
-  // Progression manquante (0 = déjà max, 1 = niveau 1)
-  const levelGap = (11 - b.power) / 10;           // 0..1
-  const missingStars = (2 - (b.starPowers?.length||0)) / 2;  // 0..1
-  const missingGadgets = (2 - (b.gadgets?.length||0)) / 2;    // 0..1
+  // Ce qui manque — pondéré par importance
+  const levelGap    = (11 - b.power) / 10;                        // 0..1
+  const missingSP   = (2 - (b.starPowers?.length||0)) / 2;         // 0..1
+  const missingGAD  = (2 - (b.gadgets?.length||0))   / 2;          // 0..1
 
-  // ROI : bonus si brawler presque fini (peu coûteux)
+  // ROI : si brawler proche du max, l'investissement est rentable
   const cost = getCostToMax(b.power);
-  const maxCost = getCostToMax(1).coins; // coût max possible
-  const roiBonus = cost.coins > 0 ? (1 - cost.coins / maxCost) * 0.5 : 0.5;
+  const maxCost = getCostToMax(1).coins;
+  const roi = cost.coins > 0 ? (1 - cost.coins / maxCost) : 1; // 0..1
 
-  // Score brut sur ~7
-  let raw = tierBase
-    + levelGap * 0.8
-    + missingStars * 0.5
-    + missingGadgets * 0.4
-    + roiBonus;
+  // Score brut (max théorique ~10 sans bonus)
+  let raw = tierBase                // 1..6
+    + levelGap   * 1.2             // 0..1.2
+    + missingSP  * 0.8             // 0..0.8
+    + missingGAD * 0.6             // 0..0.6
+    + roi        * 0.4;            // 0..0.4
+  // Total max sans bonus = 6+1.2+0.8+0.6+0.4 = 9.0
 
-  // Bonus HC : +1 si HC dispo et pas encore obtenue
+  // Bonus HC : +0.6 si HC dispo mais pas encore obtenue (évite les 10.0)
   const hc = hasHypercharge(b);
   if(HC_BRAWLERS.has(b.name.toUpperCase()) && !hc) {
-    raw += tier === 'S' ? 1.5 : 1.0;
+    raw += tier === 'S' ? 0.8 : 0.6;
   }
 
-  // Bonus rôle déficitaire : +0.3
+  // Bonus rôle déficitaire : +0.2
   if(allBrawlers?.length) {
     const role = getBrawlerRole(b.name);
     const maxedInRole = allBrawlers.filter(x=>getBrawlerRole(x.name)===role && x.power===11).length;
     const avgMaxed = allBrawlers.filter(x=>x.power===11).length / Math.max(1, Object.keys(BRAWLER_ROLES).length);
-    if(maxedInRole < avgMaxed * 0.5) raw += 0.3;
+    if(maxedInRole < avgMaxed * 0.5) raw += 0.2;
   }
 
-  // Normalise sur 10, arrondi à 1 décimale
-  const score10 = Math.min(10, raw / 7 * 10);
-  return Math.round(score10 * 10) / 10; // ex: 8.7
+  // Plafond à 10, arrondi à 1 décimale
+  return Math.round(Math.min(10, raw) * 10) / 10;
 }
 
 function scoreToColor(score, max) {
@@ -2177,13 +2187,14 @@ function renderPriorities(brawlers) {
       <div class="priority-info" onclick="openModal(decodeB('${bData}'))" style="cursor:pointer">
         <div class="priority-name">${b.name}${hc?' <span class="hc-inline">⚡HC</span>':''} <span class="rarity-badge rarity-${getBrawlerRarity(b.name)}">${getRarityLabel(getBrawlerRarity(b.name))}</span></div>
         <div class="priority-details">
-          <span>⚡ PWR ${b.power}/11</span>
-          <span>⭐ ${sps}/2 SP</span>
-          <span>🔧 ${gads}/2 GAD</span>
+          <span><span class="detail-label pwr-label">PWR</span> ${b.power}/11</span>
+          <span><span class="detail-label sp-label">SP</span> ${sps}/2</span>
+          <span><span class="detail-label gad-label">GAD</span> ${gads}/2</span>
           <span class="cost-tag">
-            <span class="icon-coin">🪙</span>
-            <span class="cost-coins">${cost.coins.toLocaleString()}</span>·
-            <span class="icon-pp">🔵</span>
+            <span class="detail-label coin-label">PCS</span>
+            <span class="cost-coins">${cost.coins.toLocaleString()}</span>
+            <span style="opacity:0.5">·</span>
+            <span class="detail-label pp-label">PP</span>
             <span class="cost-pp">${cost.pp.toLocaleString()}</span>
             ${afText?`<span style="color:${afColor};font-size:10px;font-weight:700;margin-left:2px">${afText}</span>`:''}
           </span>
@@ -2243,7 +2254,7 @@ function renderMeta(ownedBrawlers) {
           const isOwned = [...owned].some(o=>o.includes(name)||name.includes(o));
           const bObj = isOwned ? (ownedBrawlers||[]).find(b=>b.name.toUpperCase().includes(name)||name.includes(b.name.toUpperCase())) : null;
           return `<div class="meta-brawler-chip ${isOwned?'owned':''}" ${bObj?`onclick="openModal(${JSON.stringify(bObj).replace(/"/g,'&quot;')})"`:''}>
-            <img class="meta-chip-img" src="https://cdn.brawlify.com/brawlers/borderless/${bObj?.id||16000000}.png" alt="${name}" onerror="this.style.display='none'">
+            <img class="meta-chip-img" crossorigin="anonymous" src="https://cdn.brawlify.com/brawlers/borderless/${bObj?.id||16000000}.png" alt="${name}" onerror="this.style.display='none'">
             <span class="meta-chip-name">${name}</span>
             ${isOwned?'<span style="font-size:10px;color:var(--accent)">✓</span>':''}
           </div>`;
