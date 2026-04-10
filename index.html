@@ -131,24 +131,7 @@ header {
   gap: 6px;
 }
 
-.lang-btn {
-  padding: 5px 11px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  color: var(--text-muted);
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  transition: all 0.2s;
-  letter-spacing: 0.5px;
-}
-.lang-btn.active, .lang-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(247,201,72,0.08);
-}
+/* lang-btn styles defined later in sheet */
 
 .config-btn {
   padding: 5px 11px;
@@ -1401,7 +1384,117 @@ footer {
 }
 .sim-priority-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(167,139,250,0.4); }
 
-</style>
+/* ── LANG SELECTOR ── */
+.lang-selector {
+  display: flex;
+  gap: 3px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+.lang-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 1px;
+}
+.lang-btn.active {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 2px 8px rgba(247,201,72,0.4);
+}
+.lang-btn:hover:not(.active) { color: var(--accent); background: rgba(247,201,72,0.1); }
+
+/* ── SORT BAR ── */
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+}
+.sort-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-right: 4px;
+}
+.sort-btn {
+  padding: 5px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.sort-btn.active { background: var(--accent3); border-color: var(--accent3); color: #000; font-weight: 700; }
+.sort-btn:hover:not(.active) { border-color: var(--accent3); color: var(--accent3); }
+
+/* ── LOW TROPHY BADGE ── */
+.low-trophy-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(255,107,53,0.85);
+  color: #fff;
+  font-size: 8px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* ── HC ICON BADGES ── */
+.hc-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+.hc-status.unlocked { background: rgba(167,139,250,0.2); color: #a78bfa; border: 1px solid rgba(167,139,250,0.4); }
+.hc-status.available { background: rgba(255,201,0,0.15); color: #ffc900; border: 1px solid rgba(255,201,0,0.3); }
+
+/* ── CALC BTN FIX (no overflow) ── */
+.resource-calc-btn {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/* ── LOW TROPHY CARD ── */
+.brawler-card.low-trophy {
+  border-color: rgba(255,107,53,0.4);
+  background: linear-gradient(135deg, var(--surface), rgba(255,107,53,0.06));
+}
+.brawler-card.low-trophy .brawler-card-name { color: var(--accent2); }</style>
 </head>
 <body>
 
@@ -1418,10 +1511,12 @@ footer {
         </div>
       </div>
       <div class="header-right">
-        <button class="lang-btn active" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('es')">ES</button>
-        <button class="config-btn" id="configBtn" onclick="openConfig()" title="Config API">⚙️</button>
+        <div class="lang-selector">
+          <button class="lang-btn active" id="langBtnFr" onclick="setLang('fr')">FR</button>
+          <button class="lang-btn" id="langBtnEn" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="langBtnEs" onclick="setLang('es')">ES</button>
+        </div>
+        <button class="config-btn" id="configBtn" onclick="openConfig()" title="API Config">⚙️</button>
       </div>
     </div>
   </div>
@@ -1576,7 +1671,7 @@ footer {
       </div>
     </div>
 
-    <button class="resource-calc-btn" onclick="calcMultiUpgrade()">⚡ CALCULER COMBIEN DE BRAWLERS JE PEUX MAXER</button>
+    <button class="resource-calc-btn" onclick="calcMultiUpgrade()" data-i18n="calcBtn">CALCULATE WHAT I CAN MAX</button>
     <div class="resource-calc-result" id="calcResult"></div>
   </div>
 
@@ -1629,8 +1724,16 @@ footer {
     <!-- TAB BRAWLERS -->
     <div class="tab-content" id="tab-brawlers">
       <div class="section-header">
-        <span class="section-title" data-i18n="yourBrawlers">TES BRAWLERS</span>
+        <span class="section-title" data-i18n="yourBrawlers">YOUR BRAWLERS</span>
         <span class="section-count" id="brawlerCount"></span>
+      </div>
+      <div class="sort-bar">
+        <span class="sort-label" data-i18n="sortBy">SORT BY</span>
+        <button class="sort-btn active" onclick="sortBrawlers('trophies')" id="sortTrophies" data-i18n="sortTrophies">Trophies</button>
+        <button class="sort-btn" onclick="sortBrawlers('tier')" id="sortClass" data-i18n="sortClass">Class</button>
+        <button class="sort-btn" onclick="sortBrawlers('rarity')" id="sortRarity" data-i18n="sortRarity">Rarity</button>
+        <button class="sort-btn" onclick="sortBrawlers('power')" id="sortPower" data-i18n="sortPower">Power</button>
+        <button class="sort-btn" onclick="sortBrawlers('name')" id="sortName" data-i18n="sortName">Name</button>
       </div>
       <div class="brawler-grid" id="brawlerGrid"></div>
     </div>
@@ -1649,17 +1752,17 @@ footer {
 <!-- CONFIG OVERLAY -->
 <div class="config-overlay" id="configOverlay">
   <div class="config-panel">
-    <div class="config-title">⚙️ CONFIGURATION API</div>
-    <p class="config-desc">
-      Entre ta clé API Groq pour activer l&apos;analyse IA.<br>
-      Obtiens-la sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a><br>
-      <span style="color:var(--accent2);font-size:10px">⚠️ Clé sauvegardée localement dans ton navigateur.</span>
+    <div class="config-title" data-i18n="configTitle">API CONFIGURATION</div>
+    <p class="config-desc" data-i18n="configDesc">
+      Enter your Groq API key to enable AI analysis.<br>
+      <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a><br>
+      <span style="color:var(--accent2);font-size:10px">⚠️ Key saved locally in your browser.</span>
     </p>
-    <div class="config-label">CLÉ API GROQ (gsk_...)</div>
+    <div class="config-label" data-i18n="configLabel">GROQ API KEY (gsk_...)</div>
     <input type="password" class="config-input" id="claudeKeyInput" placeholder="gsk_..." />
     <div class="config-actions">
-      <button class="config-save" onclick="saveConfig()">💾 SAUVEGARDER</button>
-      <button class="config-cancel" onclick="closeConfig()">ANNULER</button>
+      <button class="config-save" onclick="saveConfig()" data-i18n="saveBtn">SAVE</button>
+      <button class="config-cancel" onclick="closeConfig()" data-i18n="cancelBtn">CANCEL</button>
     </div>
     <div class="config-status" id="configStatus"></div>
   </div>
@@ -1723,9 +1826,9 @@ const TRANSLATIONS = {
     brawlers: "Brawlers",
     level: "Niveau",
     victories: "Victoires 3v3",
-    tabPriorities: "🎯 PRIORITÉS",
-    tabBrawlers: "🃏 BRAWLERS",
-    tabMeta: "📊 MÉTA",
+    tabPriorities: "PRIORITÉS",
+    tabBrawlers: "BRAWLERS",
+    tabMeta: "MÉTA",
     upgradeOrder: "ORDRE D'UPGRADE",
     yourBrawlers: "TES BRAWLERS",
     metaApril: "MÉTA MAI 2026",
@@ -1734,16 +1837,22 @@ const TRANSLATIONS = {
     errNoTag: "Entre d'abord ton tag de joueur !",
     errNotFound: "Joueur introuvable. Vérifie ton tag (ex: #ABC123)",
     errApi: "Erreur API. Réessaie dans quelques secondes.",
-    powerLevel: "Puissance",
-    maxCost: "Coût pour max",
-    coins: "pièces",
-    pp: "PP",
-    owned: "Possédé ✓",
-    notOwned: "Non possédé",
-    stars: "Star Powers",
-    gadgets: "Gadgets",
-    clickForAI: "Clique pour l'analyse IA",
-    score: "Score",
+    powerLevel: "Puissance", maxCost: "Coût pour max", coins: "pièces", pp: "PP",
+    owned: "Possédé ✓", notOwned: "Non possédé", stars: "Star Powers", gadgets: "Gadgets",
+    clickForAI: "Clique pour l'analyse IA", score: "Score",
+    analyseBtn: "ANALYSER",
+    sortBy: "TRIER PAR",
+    sortTrophies: "Trophées", sortClass: "Classe", sortRarity: "Rareté",
+    sortPower: "Niveau", sortName: "Nom",
+    calcBtn: "CALCULER CE QUE JE PEUX MAXER",
+    saveBtn: "SAUVEGARDER",
+    cancelBtn: "ANNULER",
+    configTitle: "CONFIGURATION API",
+    configDesc: "Entre ta clé API Groq pour activer l'analyse IA.",
+    configLabel: "CLÉ API GROQ (gsk_...)",
+    hcUnlocked: "HC DÉBLOQUÉE",
+    hcLocked: "HC DISPONIBLE",
+    lowTrophies: "Peu joué",
     aiPrompt: (name, tier, power, trophies, sps, gadgets, lang) =>
       `Tu es un expert Brawl Stars. Analyse le brawler "${name}" pour un joueur niveau ${power} avec ${trophies} trophées, ${sps} star power(s) et ${gadgets} gadget(s). Tier ${tier} en Mai 2026.\n\nRéponds en français (sans markdown) :\n⚡ FORCES : (2-3 points forts)\n⚠️ FAIBLESSES : (1-2 faiblesses)\n🗺️ MEILLEURS MODES : (2-3 modes)\n👥 COMPO IDÉALE : (2 brawlers synergiques)\n🔧 UPGRADE EN PREMIER : (star power, gadget ou niveau)\n📈 VERDICT : (1 phrase synthèse)\n\nSois concis.`,
   },
@@ -1758,9 +1867,9 @@ const TRANSLATIONS = {
     brawlers: "Brawlers",
     level: "Level",
     victories: "3v3 Wins",
-    tabPriorities: "🎯 PRIORITIES",
-    tabBrawlers: "🃏 BRAWLERS",
-    tabMeta: "📊 META",
+    tabPriorities: "PRIORITIES",
+    tabBrawlers: "BRAWLERS",
+    tabMeta: "META",
     upgradeOrder: "UPGRADE ORDER",
     yourBrawlers: "YOUR BRAWLERS",
     metaApril: "META MAY 2026",
@@ -1772,6 +1881,19 @@ const TRANSLATIONS = {
     powerLevel: "Power", maxCost: "Cost to max", coins: "coins", pp: "PP",
     owned: "Owned ✓", notOwned: "Not owned", stars: "Star Powers", gadgets: "Gadgets",
     clickForAI: "Click for AI analysis", score: "Score",
+    analyseBtn: "ANALYZE",
+    sortBy: "SORT BY",
+    sortTrophies: "Trophies", sortClass: "Class", sortRarity: "Rarity",
+    sortPower: "Power", sortName: "Name",
+    calcBtn: "CALCULATE WHAT I CAN MAX",
+    saveBtn: "SAVE",
+    cancelBtn: "CANCEL",
+    configTitle: "API CONFIGURATION",
+    configDesc: "Enter your Groq API key to enable AI analysis.",
+    configLabel: "GROQ API KEY (gsk_...)",
+    hcUnlocked: "HC UNLOCKED",
+    hcLocked: "HC AVAILABLE",
+    lowTrophies: "Rarely played",
     aiPrompt: (name, tier, power, trophies, sps, gadgets, lang) =>
       `You are a Brawl Stars expert. Analyze brawler "${name}" at power ${power} with ${trophies} trophies, ${sps} star power(s) and ${gadgets} gadget(s). Tier ${tier} in May 2026.\n\nReply in English (no markdown):\n⚡ STRENGTHS: (2-3 points)\n⚠️ WEAKNESSES: (1-2 points)\n🗺️ BEST MODES: (2-3 modes)\n👥 IDEAL COMP: (2 synergistic brawlers)\n🔧 UPGRADE FIRST: (star power, gadget or level)\n📈 VERDICT: (1 sentence)\n\nBe concise.`,
   },
@@ -1782,7 +1904,7 @@ const TRANSLATIONS = {
     heroSub: "Ingresa tu tag para obtener tu plan de mejoras.",
     analyze: "ANALIZAR", loading: "ANALIZANDO...",
     trophies: "Trofeos", brawlers: "Brawlers", level: "Nivel", victories: "Victorias 3v3",
-    tabPriorities: "🎯 PRIORIDADES", tabBrawlers: "🃏 BRAWLERS", tabMeta: "📊 META",
+    tabPriorities: "PRIORIDADES", tabBrawlers: "BRAWLERS", tabMeta: "META",
     upgradeOrder: "ORDEN DE MEJORA", yourBrawlers: "TUS BRAWLERS", metaApril: "META MAYO 2026",
     aiAnalysis: "ANÁLISIS GROQ AI", aiLoading: "Analizando...",
     errNoTag: "Ingresa tu tag primero!", errNotFound: "Jugador no encontrado.",
@@ -1790,6 +1912,19 @@ const TRANSLATIONS = {
     powerLevel: "Nivel de poder", maxCost: "Coste para max", coins: "monedas", pp: "PP",
     owned: "Poseído ✓", notOwned: "No poseído", stars: "Star Powers", gadgets: "Gadgets",
     clickForAI: "Clic para análisis IA", score: "Puntuación",
+    analyseBtn: "ANALIZAR",
+    sortBy: "ORDENAR POR",
+    sortTrophies: "Trofeos", sortClass: "Clase", sortRarity: "Rareza",
+    sortPower: "Nivel", sortName: "Nombre",
+    calcBtn: "CALCULAR LO QUE PUEDO MAXEAR",
+    saveBtn: "GUARDAR",
+    cancelBtn: "CANCELAR",
+    configTitle: "CONFIGURACIÓN API",
+    configDesc: "Ingresa tu clave API Groq para activar el análisis IA.",
+    configLabel: "CLAVE API GROQ (gsk_...)",
+    hcUnlocked: "HC DESBLOQUEADA",
+    hcLocked: "HC DISPONIBLE",
+    lowTrophies: "Poco jugado",
     aiPrompt: (name, tier, power, trophies, sps, gadgets, lang) =>
       `Eres experto en Brawl Stars. Analiza "${name}" nivel ${power} con ${trophies} trofeos, ${sps} star power(s) y ${gadgets} gadget(s). Tier ${tier} en Mayo 2026.\n\nResponde en español (sin markdown):\n⚡ FORTALEZAS:\n⚠️ DEBILIDADES:\n🗺️ MEJORES MODOS:\n👥 COMP IDEAL:\n🔧 MEJORAR PRIMERO:\n📈 VEREDICTO:\n\nSé conciso.`,
   }
@@ -1824,7 +1959,7 @@ function getCostToMax(p) {
   return {coins:c,pp};
 }
 
-let currentLang = 'fr';
+let currentLang = 'en';
 let playerData = null;
 let currentBrawlerForModal = null;
 
@@ -1845,6 +1980,10 @@ function applyTranslations() {
 
 function setLang(lang) {
   currentLang = lang;
+  ['fr','en','es'].forEach(l => {
+    const btn = document.getElementById('langBtn'+l.charAt(0).toUpperCase()+l.slice(1));
+    if(btn) btn.classList.toggle('active', l===lang);
+  });
   applyTranslations();
   if(playerData) renderDashboard(playerData);
 }
@@ -2209,34 +2348,70 @@ function renderPriorities(brawlers) {
   }).join('');
 }
 
+let currentSort = 'trophies';
+
+function sortBrawlers(by) {
+  currentSort = by;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  const ids = {trophies:'sortTrophies',tier:'sortClass',rarity:'sortRarity',power:'sortPower',name:'sortName'};
+  const el = document.getElementById(ids[by]);
+  if(el) el.classList.add('active');
+  if(playerData?.brawlers) renderBrawlers(playerData.brawlers);
+}
+
+const RARITY_ORDER = {'ultra-legendary':0,'legendary':1,'mythic':2,'epic':3,'super-rare':4,'rare':5,'common':6};
+const TIER_ORDER = {S:0,A:1,B:2,C:3,D:4};
+
 function renderBrawlers(brawlers) {
   if(!brawlers?.length) return;
-  const sorted = [...brawlers].sort((a,b)=>b.trophies-a.trophies);
+
+  // Seuil trophées bas = moins de 500 ou moins de 20% du max du joueur
+  const maxT = Math.max(...brawlers.map(b=>b.trophies||0));
+  const lowThreshold = Math.min(500, maxT * 0.15);
+
+  let sorted = [...brawlers];
+  if(currentSort==='trophies') sorted.sort((a,b)=>b.trophies-a.trophies);
+  else if(currentSort==='tier') sorted.sort((a,b)=>(TIER_ORDER[getBrawlerTier(a.name)]||5)-(TIER_ORDER[getBrawlerTier(b.name)]||5));
+  else if(currentSort==='rarity') sorted.sort((a,b)=>(RARITY_ORDER[getBrawlerRarity(a.name)]||6)-(RARITY_ORDER[getBrawlerRarity(b.name)]||6));
+  else if(currentSort==='power') sorted.sort((a,b)=>b.power-a.power);
+  else if(currentSort==='name') sorted.sort((a,b)=>a.name.localeCompare(b.name));
+
   document.getElementById('brawlerCount').textContent = `${sorted.length} brawlers`;
+  const hcAvailLabel = t('hcLocked') || 'HC AVAILABLE';
+  const hcUnlockLabel = t('hcUnlocked') || 'HC UNLOCKED';
+  const lowTLabel = t('lowTrophies') || 'Rarely played';
+
   document.getElementById('brawlerGrid').innerHTML = sorted.map(b => {
     const tier=getBrawlerTier(b.name), rarity=getBrawlerRarity(b.name);
     const sps=b.starPowers?.length||0, gads=b.gadgets?.length||0;
     const pct=((b.power-1)/10)*100, hc=hasHypercharge(b);
+    const hcAvail = HC_BRAWLERS.has(b.name.toUpperCase());
+    const isLowTrophy = (b.trophies||0) < lowThreshold && maxT > 200;
     const pwrColor = b.power===11&&hc?'#a78bfa':b.power===11?'#29d4ff':b.power>=9?'var(--accent)':'var(--text-muted)';
     const bData = encodeURIComponent(JSON.stringify(b));
-    // SP/Gadget dots — pure CSS, no broken img tags
     const spDots = `<span class="dot-sp${sps>=1?' on':''}"></span><span class="dot-sp${sps>=2?' on':''}"></span>`;
     const gadDots = `<span class="dot-gad${gads>=1?' on':''}"></span><span class="dot-gad${gads>=2?' on':''}"></span>`;
-    return `<div class="brawler-card tier-${tier} rarity-${rarity}${hc?' has-hc':''}" onclick="openModal(decodeB('${bData}'))">
-      ${hc?'<span class="hc-badge">⚡ HC</span>':(b.power===11?'<span class="hc-unlock-badge">🔓 HC?</span>':'')}
+    const hcBadge = hc
+      ? `<div class="hc-status unlocked">⚡ ${hcUnlockLabel}</div>`
+      : hcAvail
+        ? `<div class="hc-status available">◈ ${hcAvailLabel}</div>`
+        : '';
+    return `<div class="brawler-card tier-${tier} rarity-${rarity}${hc?' has-hc':''}${isLowTrophy?' low-trophy':''}" onclick="openModal(decodeB('${bData}'))">
+      ${isLowTrophy?`<span class="low-trophy-badge">${lowTLabel}</span>`:''}
       <span class="tier-badge tier-${tier}" style="position:absolute;top:7px;right:7px;font-size:9px;padding:1px 5px">${tier}</span>
-      <img class="brawler-card-img" src="${getBrawlerImg(b.id)}" alt="${b.name}"
+      <img class="brawler-card-img" crossorigin="anonymous" src="${getBrawlerImg(b.id)}" alt="${b.name}"
            onerror="this.src='https://cdn.brawlify.com/brawlers/borders/16000000.png'">
       <div class="brawler-card-name">${b.name}</div>
-      <div style="text-align:center;margin-bottom:4px"><span class="rarity-badge rarity-${rarity}">${getRarityLabel(rarity)}</span></div>
+      <div style="text-align:center;margin-bottom:3px"><span class="rarity-badge rarity-${rarity}">${getRarityLabel(rarity)}</span></div>
       <div class="power-bar"><div class="power-fill ${getPowerBarClass(b,hc)}" style="width:${pct}%"></div></div>
-      <div class="power-level-badge" style="color:${pwrColor}">PWR ${b.power}${b.power===11&&hc?' ⚡':''}</div>
-      <div class="card-icons" style="margin-top:5px;display:flex;align-items:center;justify-content:center;gap:3px">
-        <span style="font-size:10px">⭐</span>${spDots}
+      <div class="power-level-badge" style="color:${pwrColor}">PWR ${b.power}</div>
+      <div class="card-icons" style="margin-top:4px;display:flex;align-items:center;justify-content:center;gap:3px">
+        <span class="detail-label sp-label" style="font-size:8px">SP</span>${spDots}
         <span style="width:4px"></span>
-        <span style="font-size:10px">🔧</span>${gadDots}
+        <span class="detail-label gad-label" style="font-size:8px">GAD</span>${gadDots}
       </div>
-      <button class="analyser-card-btn" onclick="event.stopPropagation();openAnalyser(decodeB('${bData}'))">🤖 ANALYSER</button>
+      ${hcBadge}
+      <button class="analyser-card-btn" onclick="event.stopPropagation();openAnalyser(decodeB('${bData}'))">ANALYZE</button>
     </div>`;
   }).join('');
 }
@@ -2763,8 +2938,8 @@ function runSimulation() {
   document.getElementById('simComparison').classList.add('show');
 }
 
-// INIT
-applyTranslations();
+// INIT — anglais par défaut
+setLang('en');
 const savedTag=localStorage.getItem('saved_tag');
 if(savedTag){document.getElementById('tagInput').value=savedTag;const a=document.getElementById('savedTagArea'),c=document.getElementById('savedTagText');if(a&&c){c.textContent=savedTag;a.style.display='block';}}
 
